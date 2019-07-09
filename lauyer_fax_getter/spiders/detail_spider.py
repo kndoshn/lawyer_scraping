@@ -4,13 +4,12 @@ class DetailSpider(scrapy.Spider):
     name = "detail"
 
     def start_requests(self):
-        urls = [
-            "https://www.nichibenren.jp/member_general/lawyer/lawyerSearchResultsList/showMembersDetailedInfo?org.apache.struts.taglib.html.TOKEN=9e937a440ba81f93ae5dbb0b4ccb7147&membership_classification=1&registration_no=6167",
-        ]
+        file = open('all_numbers.csv')
+        numbers = [n.strip() for n in file.readlines()]
 
-        for url in urls:
+        for number in numbers:
             yield scrapy.Request(
-                url=url,
+                url= "https://www.nichibenren.jp/member_general/lawyer/lawyerSearchResultsList/showMembersDetailedInfo?org.apache.struts.taglib.html.TOKEN=9e937a440ba81f93ae5dbb0b4ccb7147&membership_classification=1&registration_no=" + number,
                 method='POST',
                 headers = {
                     'Cookie:': 'JSESSIONID=5FBF0FF382E0EA762244E77129A4BCAD',
